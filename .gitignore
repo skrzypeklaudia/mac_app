@@ -1,1 +1,3 @@
 virtual_envi
+__pycache__
+*.pyc
