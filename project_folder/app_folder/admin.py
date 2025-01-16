@@ -27,3 +27,4 @@ class OsobaAdmin(admin.ModelAdmin):
     list_filter = ["stanowisko", "data_dodania"]
     
 admin.site.register(Osoba, OsobaAdmin)
+

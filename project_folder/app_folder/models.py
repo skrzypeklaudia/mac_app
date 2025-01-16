@@ -51,7 +51,6 @@ class Osoba(models.Model):
 
     class Meta:
         ordering = ["nazwisko"]
-
 class Stanowisko(models.Model):
     nazwa = models.CharField(max_length = 80, blank = False, null = False)
     opis = models.TextField(blank = False, null = False)
