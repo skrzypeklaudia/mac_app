@@ -49,12 +49,8 @@ class Osoba(models.Model):
     def __str__(self):
         return f'{self.imie} {self.nazwisko}'
 
-<<<<<<< HEAD
     class Meta:
         ordering = ["nazwisko"]
-
-=======
->>>>>>> 3bab4acd16a4ddf6e0ab2ca31f12863dfe5eff1a
 class Stanowisko(models.Model):
     nazwa = models.CharField(max_length = 80, blank = False, null = False)
     opis = models.TextField(blank = False, null = False)
