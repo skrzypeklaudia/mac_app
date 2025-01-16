@@ -4,7 +4,6 @@ from django.contrib import admin
 from .models import Team, Person, Osoba, Stanowisko
 
 admin.site.register(Team)
-<<<<<<< HEAD
 class PersonAdmin(admin.ModelAdmin):
     # zmienna list_display przechowuje listę pól, które mają się wyświetlać w widoku listy danego modelu w panelu administracynym
     list_display = ['name', 'shirt_size', 'team']
@@ -28,8 +27,4 @@ class OsobaAdmin(admin.ModelAdmin):
     list_filter = ["stanowisko", "data_dodania"]
     
 admin.site.register(Osoba, OsobaAdmin)
-=======
-admin.site.register(Person)
-admin.site.register(Stanowisko)
-admin.site.register(Osoba)
->>>>>>> 3bab4acd16a4ddf6e0ab2ca31f12863dfe5eff1a
+
