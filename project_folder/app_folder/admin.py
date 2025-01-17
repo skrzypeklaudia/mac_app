@@ -23,8 +23,8 @@ class OsobaAdmin(admin.ModelAdmin):
             return f'{obj.stanowisko.nazwa} ({obj.stanowisko.id})'
         return "Brak stanowiska"
             
-    list_display = ['imie', 'nazwisko', 'plec', 'stanowisko_with_id', 'data_dodania']
-    list_filter = ["stanowisko", "data_dodania"]
+    list_display = ['imie', 'nazwisko', 'plec', 'stanowisko_with_id']
+    list_filter = ["stanowisko"]
     
 admin.site.register(Osoba, OsobaAdmin)
 
