@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Osoba, Person, Stanowisko, Team
 from .serializers import OsobaSerializer, PersonSerializer, StanowiskoSerializer
+from rest_framework.views import APIView
 
 # określamy dostępne metody żądania dla tego endpointu
 @api_view(['GET'])
@@ -108,4 +109,33 @@ def stanowisko_detail(request, pk):
         return Response(serializer.data)
     elif request.method == "DELETE":
         stanowisko.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class OsobaList(APIView):
+    def get(self, request):
+        osoby = Osoba.objects.all()
+        serializer = OsobaSerializer(osoby, many = True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer = OsobaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class OsobaDetail(APIView):
+    def get(self, request, pk):
+        try:
+            osoba = Osoba.objects.get(pk=pk)
+        except Osoba.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
+        serializer = OsobaSerializer(osoba)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        try:
+            osoba = Osoba.objects.get(pk=pk)
+        except Osoba.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
+        osoba.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
