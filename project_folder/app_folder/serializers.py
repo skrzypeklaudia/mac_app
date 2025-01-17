@@ -15,7 +15,7 @@ class PersonSerializer(serializers.Serializer):
     # w pliku models.py SHIRT_SIZES oraz MONTHS zostały wyniesione jako stałe do poziomu zmiennych skryptu
     # (nie wewnątrz modelu)
     shirt_size = serializers.ChoiceField(choices=SHIRT_SIZES, default=SHIRT_SIZES[0][0])
-    miesiac_dodania = serializers.ChoiceField(choices=MONTHS.choices, default=MONTHS.choices[0][0])
+    month_added = serializers.ChoiceField(choices=MONTHS.choices, default=MONTHS.choices[0][0])
 
     # odzwierciedlenie pola w postaci klucza obcego
     # przy dodawaniu nowego obiektu możemy odwołać się do istniejącego poprzez inicjalizację nowego obiektu
@@ -23,6 +23,14 @@ class PersonSerializer(serializers.Serializer):
     team = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
 
     pseudonim = serializers.CharField(required=False)
+    
+    def validate_name(self, value):
+
+        if not value.istitle():
+            raise serializers.ValidationError(
+                "Nazwa osoby powinna rozpoczynać się wielką literą!",
+            )
+        return value
 
     # przesłonięcie metody create() z klasy serializers.Serializer
     def create(self, validated_data):
@@ -32,9 +40,9 @@ class PersonSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.shirt_size = validated_data.get('shirt_size', instance.shirt_size)
-        instance.miesiac_dodania = validated_data.get('miesiac_dodania', instance.miesiac_dodania)
+        instance.month_added = validated_data.get('month_added', instance.month_added)
         instance.team = validated_data.get('team', instance.team)
-        instance.pseudonim = validated_data.get('pseudonim', instance.psudonim)
+        instance.pseudonim = validated_data.get('pseudonim', instance.pseudonim)
         instance.save()
         return instance
     
