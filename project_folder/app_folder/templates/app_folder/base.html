@@ -16,5 +16,8 @@
         <div id="sidebar">
             <p>Panel boczny</p>
         </div>
+        {% if perms.app_folder.delete_person %}
+        <button>Delete</button>
+        {% endif %}
     </body>
 </html>
